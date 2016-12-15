@@ -51,18 +51,19 @@ app.get("/", function(req, res) {
 // GET request to scrape the website
 app.get("/scrape", function(req, res) {
   // First, grab the body of the html with request
-  request("http://www.bbc.com/news/world/us_and_canada", function(error, response, html) {
+  request("http://www.newser.com/", function(error, response, html) {
     // Then, load html into cheerio and save it to $
     var $ = cheerio.load(html);
     // Now, we grab every h3 within an a tag, and do the following:
-    $("a h3").each(function(i, element) {
+    $("#storyGridData div div").each(function(i, element) {
 	    // Save an empty result object
 	    var result = {};
 	    // Add the text and href of every link, and save them as properties of the result object
-	    result.title = $(this).children("a").text();
-      result.link = $(this).children("a").attr("href");
+	    result.title = $(this).children("a").children("img").alt();
+      result.link = $(this).children("a").first().attr("href");
       // create a new entry using Article model
       // this passes the title and link to entry
+      console.log(result);
       var entry = new Article(result);
       // save entry to db
       entry.save(function(err, doc) {
@@ -80,6 +81,7 @@ app.get("/scrape", function(req, res) {
   // tell browser scrape complete
   res.send("Scrape Complete");
 });
+
 
 
 // get articles scraped from mongoDB
