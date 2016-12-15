@@ -18,10 +18,10 @@ var ArticleSchema = new Schema({
 		required: true
 	},
 	// this saves one note's ObjectID. ref refers to the Note model. This is the association.
-	note: {
+	note: [{
 		type: Schema.Types.ObjectId,
 		ref: "Note"
-	}
+	}]
 });
 
 // create the Article model with the ArticleSchema

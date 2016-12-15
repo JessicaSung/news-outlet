@@ -26,6 +26,8 @@ app.use(bodyParser.urlencoded({
 // Make public a static dir
 app.use(express.static("public"));
 
+
+
 // Database configuration with mongoose
 mongoose.connect("mongodb://localhost/news");
 var db = mongoose.connection;
@@ -54,11 +56,11 @@ app.get("/scrape", function(req, res) {
   request("http://www.theonion.com/section/entertainment/", function(error, response, html) {
     // Then, load html into cheerio and save it to $
     var $ = cheerio.load(html);
-    // Now, we grab every h3 within an a tag, and do the following:
+    // Now, we grab elements with headline class and
     $(".headline").each(function(i, element) {
-	    // Save an empty result object
+	    // create an empty result object
 	    var result = {};
-	    // Add the text and href of every link, and save them as properties of the result object
+	    // add the text and href of every link, and save them as properties of the result object
 	    result.title = $(this).children("a").attr("title");
       result.link = $(this).children("a").attr("href");
       // create a new entry using Article model
@@ -103,7 +105,7 @@ app.get("/articles", function(req, res) {
 // grab article by it's ObjectID
 app.get("/articles/:id", function(req, res) {
   // use id passed in id parameter, prepare query that finds matching one in db
-  Article.findone({ "_id": req.params.id })
+  Article.findOne({ "_id": req.params.id })
   // ... and populate all of the notes associated with it
   .populate("note")
   // execute our query
@@ -121,22 +123,23 @@ app.get("/articles/:id", function(req, res) {
 
 // create a new note or replace an existing note
 app.post("/articles/:id", function(req, res) {
+  console.log("line 127" + req.params.id)
   // create a new note and pass the req.body to entry
   var newNote = new Note(req.body);
   // save the new note to db
   newNote.save(function(error, doc) {
     // log errors
-    if (err) {
+    if (error) {
       console.log(error);
     }
     else {
       // use article id to find and update it's note
-      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
+      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"note": doc._id}},{new: true})
       // execute the above query
       .exec(function(err, doc) {
         // log errors
         if (err) {
-          console.log(err);
+          console.log("line 142" + err);
         }
         else {
           // send document to the browser
