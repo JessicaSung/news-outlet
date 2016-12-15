@@ -51,16 +51,16 @@ app.get("/", function(req, res) {
 // GET request to scrape the website
 app.get("/scrape", function(req, res) {
   // First, grab the body of the html with request
-  request("http://www.newser.com/", function(error, response, html) {
+  request("http://www.theonion.com/section/entertainment/", function(error, response, html) {
     // Then, load html into cheerio and save it to $
     var $ = cheerio.load(html);
     // Now, we grab every h3 within an a tag, and do the following:
-    $("#storyGridData div div").each(function(i, element) {
+    $(".headline").each(function(i, element) {
 	    // Save an empty result object
 	    var result = {};
 	    // Add the text and href of every link, and save them as properties of the result object
-	    result.title = $(this).children("a").children("img").alt();
-      result.link = $(this).children("a").first().attr("href");
+	    result.title = $(this).children("a").attr("title");
+      result.link = $(this).children("a").attr("href");
       // create a new entry using Article model
       // this passes the title and link to entry
       console.log(result);
