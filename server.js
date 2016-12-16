@@ -27,9 +27,22 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 
+// MONGOOSE DATABASE CONFIGURATION
+// ==============================================
+// local MongoDB
+var databaseuri = "mongodb://localhost/news";
 
-// Database configuration with mongoose
-mongoose.connect("mongodb://localhost/news");
+// if Heroku mLab exists, use Heroku app
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI);
+}
+// else, use local machine
+else {
+  mongoose.connect(databaseuri);
+}
+// ======================= end database configuration =======================
+
+
 var db = mongoose.connection;
 
 // Show any mongoose errors
