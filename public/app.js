@@ -21,7 +21,7 @@ $(document).on("click", "p", function() {
 	})
 		// add note information to the page
 		.done(function(data) {
-			console.log("line 26" + data);
+			console.log("line 26", data);
 			// title of the article
 			$("#notes").append("<h2>" + data.title + "</h2>");
 			// input to enter new title
@@ -31,9 +31,15 @@ $(document).on("click", "p", function() {
 			// button to submit a new note, with article id saved to it
 			$("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 			// if there's a note in the article
-			if (data.note) {
+			// if (data.note) {
 				// ------------ write code to pull notes from database here ---------------
-			}
+				for (var i = 0; i < data.length; i++) {
+					var title = data.notes[i].title;
+					var body = data.notes[i].body;
+				}
+				$("#titleinput").append(title);
+				$("#bodyinput").append(body);
+			// }
 		});
 });
 
@@ -55,7 +61,7 @@ $(document).on("click", "#savenote", function() {
 	})
 		.done(function(data) {
 			// log response
-			console.log("line 64 server.js" + data);
+			console.log("line 64 server.js", data);
 			// empty notes section
 			$("#notes").empty();
 		});
