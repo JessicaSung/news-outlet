@@ -24,14 +24,14 @@ $(document).on("click", "p", function() {
 			console.log("line 26", data);
 			// title of the article
 			$("#notes").append("<h2>" + data.title + "</h2>");
-			// input to enter new title
-			$("#notes").append("<input id='titleinput' name='title' >");
+			// // input to enter new title
+			// $("#notes").append("<input id='titleinput' name='title' >");
 			// textarea to add a new note body
 			$("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
 			// button to submit a new note, with article id saved to it
 			$("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 			// if there's a note already for that article, it will show up
-			$("#titleinput").val(data.note[0].title);
+			// $("#titleinput").val(data.note[0].title);
 			$("#bodyinput").val(data.note[0].body);
 
 
@@ -59,8 +59,8 @@ $(document).on("click", "#savenote", function() {
 		method: "POST",
 		url: "/articles/" + thisId,
 		data: {
-			// value taken from title input
-			title: $("#titleinput").val(),
+			// // value taken from title input
+			// title: $("#titleinput").val(),
 			// value taken from note textarea
 			body: $("#bodyinput").val()
 		}
@@ -72,6 +72,6 @@ $(document).on("click", "#savenote", function() {
 			$("#notes").empty();
 		});
 	// clear values in input and textarea for new note
-	$("#titleinput").val("");
+	// $("#titleinput").val("");
 	$("#bodyinput").val("");
 });

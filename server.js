@@ -149,7 +149,8 @@ app.post("/articles/:id", function(req, res) {
     }
     else {
       // use article id to find and update it's note
-      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"note": doc._id}},{new: true})
+      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
+      // Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"note": doc._id}},{new: true})
       // execute the above query
       .exec(function(err, doc) {
         // log errors
