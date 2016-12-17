@@ -1,14 +1,16 @@
 // DEPENDENCIES
 // ===============================================
-var express = require("express");
 var bodyParser = require("body-parser");
+var cheerio = require("cheerio");
+var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var request = require("request");
-var cheerio = require("cheerio");
-var Note = require("./models/Note.js");
-var Article = require("./models/Article.js");
 
+var Article = require("./models/Article.js");
+var Note = require("./models/Note.js");
+
+var PORT = process.env.PORT || 3000;
 
 // SETUP EXPRESS SERVER
 // ==============================================
@@ -171,6 +173,6 @@ app.post("/articles/:id", function(req, res) {
 
 // DEFINE PORT AND START SERVER LISTEN
 // ==============================================
-app.listen(3000, function() {
+app.listen(PORT, function() {
   console.log("App running on port 3000!");
 });
