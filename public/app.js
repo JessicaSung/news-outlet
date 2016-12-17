@@ -1,3 +1,5 @@
+// DISPLAYS ARTICLES ON PAGE
+// ===============================================
 // grab the articles as a json
 $.getJSON("/articles", function(data) {
 	// for each one
@@ -8,6 +10,8 @@ $.getJSON("/articles", function(data) {
 });
 
 
+// DISPLAYS COMMENT BOX FOR SPECIFIC ARTICLE
+// ===============================================
 // when a p tag is clicked
 $(document).on("click", "p", function() {
 	// empty notes in notes section
@@ -34,6 +38,8 @@ $(document).on("click", "p", function() {
 });
 
 
+// SAVES USER COMMENT TO DATABASE
+// ===============================================
 // when you click the savenote button
 $(document).on("click", "#savenote", function() {
 	// grab id associated with article from submit button
