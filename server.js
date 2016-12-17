@@ -80,13 +80,8 @@ app.get("/scrape", function(req, res) {
       // create a new entry using Article model
       // this passes the title and link to entry
       console.log(result);
+      
       var entry = new Article(result);
-
-
-      // if the link of the article is NOT in db, save entry to db
-      // --------------------------------------
-
-
       entry.save(function(err, doc) {
         // log errors
         if (err) {

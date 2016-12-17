@@ -15,7 +15,8 @@ var ArticleSchema = new Schema({
 	// link is a required string
 	link: {
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
 	// this saves one note's ObjectID. ref refers to the Note model. This is the association.
 	note: [{
