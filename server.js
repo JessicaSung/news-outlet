@@ -6,11 +6,8 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var request = require("request");
 var cheerio = require("cheerio");
-var promise = require("bluebird");
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
-
-mongoose.Promise = promise;
 
 
 // SETUP EXPRESS SERVER
