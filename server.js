@@ -6,11 +6,11 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var request = require("request");
 var cheerio = require("cheerio");
-var Promise = require("bluebird");
+var promise = require("bluebird");
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
 
-mongoose.Promise = Promise;
+mongoose.Promise = promise;
 
 
 // SETUP EXPRESS SERVER
@@ -67,6 +67,8 @@ app.get("/", function(req, res) {
 app.get("/scrape", function(req, res) {
   // First, grab the body of the html with request
   request("http://www.theonion.com/section/entertainment/", function(error, response, html) {
+    // set domain to variable
+    var domain = "http://www.theonion.com/section/entertainment";
     // Then, load html into cheerio and save it to $
     var $ = cheerio.load(html);
     // Now, we grab elements with headline class and
@@ -75,7 +77,7 @@ app.get("/scrape", function(req, res) {
 	    var result = {};
 	    // add the text and href of every link, and save them as properties of the result object
 	    result.title = $(this).children("a").attr("title");
-      result.link = $(this).children("a").attr("href");
+      result.link = domain + $(this).children("a").attr("href");
       // create a new entry using Article model
       // this passes the title and link to entry
       console.log(result);
