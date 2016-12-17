@@ -79,23 +79,23 @@ app.get("/scrape", function(req, res) {
       // this passes the title and link to entry
       console.log(result);
       var entry = new Article(result);
-
-
       // if the link of the article is NOT in db, save entry to db
       // --------------------------------------
-
-
-      entry.save(function(err, doc) {
-        // log errors
-        if (err) {
-          console.log(err);
-        }
-        // or log the doc
-        else {
-          console.log(doc);
+      Article.find({}, function(error, doc) {
+        if (!db.news.find( { link: result.link } ) ) {
+          entry.save(function(err, doc) {
+            // log errors
+            if (err) {
+              console.log(err);
+            }
+            // or log the doc
+            else {
+              console.log(doc);
+            }
+          });
         }
       });
-
+      // --------------------------------------
     });
   });
   // tell browser scrape complete
